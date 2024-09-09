@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title%} 
+Book tickets
+{% endblock %}
+{% block content %}
+    <h1> Search for the train. </h1>
+    <div class = "container">
+        <form action = '/search-tickets' method ="GET" class = "form-register" style ="color:white;">
+            {{form.hidden_tag()}}
+            {{form.train_name.label()}}
+            {{form.train_name(class = "form-control",placeholder = "Train Name")}}
+            {{form.train_number.label()}}
+            {{form.train_number(class = "form-control",placeholder = "Train Number")}}
+            {{form.date.label()}}
+            {{form.date(class = "form-control",placeholder = "Journey Start Date")}}
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </form>
+    </div>
+    <br>
+    
+    <!-- <div class ="container"> -->
+        <div class = "container">
+        {% for train in search_result %}
+        <div class ="card mb-4 box-shadow" style ="color: black;">
+            <div class ="row text-center">
+            <div class ="col bg-secondary">Train Name: </div> <div class ="col" style = "background-color: lightgrey;">{{train.train_name}} </div>
+            </div>
+            <div class = "row text-center" >
+            <div class ="col bg-secondary">Train Number: </div> <div class ="col" style = "background-color: lightgrey;">{{train.train_number}}</div>
+            </div>
+            <div class = "row text-center" >
+            <div class ="col bg-secondary">Starting date : {{train.starting_date}}</div> <div class ="col" style = "background-color: lightgrey;">Starting time : {{train.starting_time}}</div>
+            </div>
+            <div class = "row text-center" >
+            <div class ="col bg-secondary">Ending date : {{train.ending_date}}</div> <div class ="col" style = "background-color: lightgrey;">Ending time : {{train.ending_time}}</div>
+            </div>
+            <div class = "row text-center" >
+            <div class ="col bg-secondary">Left seats :</div> <div class ="col" style = "background-color: lightgrey;">{{train.left_seats}}</div>
+            </div>
+            <div class = "row text-center" >
+            <div class ="col bg-secondary">Ticket price : </div> <div class ="col" style = "background-color: lightgrey;">{{train.ticket_price}}</div>
+            </div>
+            <form method = "POST">
+                <input type = "hidden" name = "train_id" value = "{{train.id}} " >
+                <input type="submit" value="BOOK" class ="btn btn-lg btn-block btn-primary">
+            </form>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+
+{% endblock %}
